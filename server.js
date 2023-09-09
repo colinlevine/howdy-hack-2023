@@ -8,9 +8,7 @@ const port = 3000;
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-app.get("/", (req, res) => {
-    res.render('index', {});
-});
+
 
 
 let csceObj = {"Riccardo Bettati": [["CSCE313", "CSCE410", "CSCE611"], 2.6, 4.8, 50],
@@ -68,10 +66,20 @@ let csceObj = {"Riccardo Bettati": [["CSCE313", "CSCE410", "CSCE611"], 2.6, 4.8,
                 "Ki Hwan Yum": [["COS206", "CSCE110", "CSCE206", "CSCE312"], 2.8, 3.6, 60]};
 
 
-var profList = [];
-var department = "CSCE";
-var courseNum = "121"
+var profObj = {};
+var department;
+var courseNum;
 
+app.get("/", (req, res) => {
+  res.render('index', { department, courseNum });
+});
+
+app.use(express.urlencoded({ extended: true }))
+app.post("/process_form", (req, res) => {
+  department = req.body["department"];
+  courseNum = req.body["courseNum"];
+  res.render("process-form", { department, courseNum });
+});
 
 for (const key in csceObj) {
   if (csceObj.hasOwnProperty(key)) {
@@ -86,16 +94,20 @@ for (const key in csceObj) {
       // console.log(className);
       if (className == `${department}${courseNum}`) {
         var profName = key;
-        profList.push(`${key}: Rating ${rating}/5, Dificulty ${difficulty}/5, Would Take Again ${wouldTake}%`);
+        
+        const newProperties = {
+          [key]: [rating, difficulty, wouldTake],
+        };
+
+        profObj = { ...profObj, ...newProperties };
+
       }
     }
-
   }
 }
+console.log(profObj);
 
-console.log(profList);
 
-                
 server.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })

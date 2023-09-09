@@ -6,22 +6,22 @@
     <title>Aggie Course Directory</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    <style>
-        #myIframe {
-          overflow: hidden;
-        }
-    </style>
 </head>
 <body>
     <form action="/process_form" method="post">
         <label for="firstName">Department</label>
-        <input type="text" id="department" name="department"><br><br>
+        <input type="text" id="department" name="Course Number"><br><br>
 
         <label for="lastName">Course Number</label>
-        <input type="text" id="lastName" name="courseNum"><br><br>
+        <input type="text" id="lastName" name="last_name"><br><br>
 
         <input type="submit" value="Submit">
     </form>
+
+    <br><br>
+    <iframe src="https://anex.us/grades/?dept=<%= department %>&number=<%= courseNum %>" height="600" width="800" title="description" id="myIframe" scrolling="no"></iframe>
+
+
 
     
 
