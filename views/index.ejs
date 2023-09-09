@@ -13,20 +13,45 @@
     </style>
 </head>
 <body>
-    <form action="/process_form" method="post">
-        <label for="firstName">Department</label>
-        <input type="text" id="department" name="department"><br><br>
+    <style>
+        .custom-bg {
+          background-color: #500; /* Your custom background color */
+          color: #ffffff; /* Text color for contrast */
+        }
+      </style>
+        <h1 class="custom-bg pt-3 pb-3">Aggie Courses Directory
+            <img src="TAM-Logo-white.png" width="75" height="55">
+        </h1>
+        <div id="dataContainer"></div>
 
-        <label for="lastName">Course Number</label>
-        <input type="text" id="lastName" name="courseNum"><br><br>
+        <form id="myForm">
+            <label for="firstName">Department:</label>
+            <input type="text" id="department" name="department"><br><br>
+        
+            <label for="lastName">Course Number:</label>
+            <input type="text" id="lastName" name="courseNum"><br><br>
+        
+            <input type="submit" value="Submit">
+        </form>
 
-        <input type="submit" value="Submit">
-    </form>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    
-
-
-    <script src="client.js"></script>
+        <script>
+        $(document).ready(function () {
+          $("#myForm").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+        
+            // Get form data
+            var formData = $(this).serialize();
+        
+            // Send AJAX request to the server
+            $.post("/process_form", formData, function (data) {
+              // Display the result in the dataContainer
+              $("#dataContainer").html(data);
+            });
+          });
+        });
+        </script>
     <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

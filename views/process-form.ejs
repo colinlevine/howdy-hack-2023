@@ -4,29 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aggie Course Directory</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        #data-table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        /* Style for table headers (th) */
+        #data-table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+        background-color: #f2f2f2;
+        }
+
+        /* Style for table cells (td) */
+        #data-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        }
+
+        /* Add a hover effect to table rows */
+        #data-table tr:hover {
+        background-color: #f5f5f5;
+        }
+    </style>
+
 </head>
 <body>
-    <form action="/process_form" method="post">
-        <label for="firstName">Department</label>
-        <input type="text" id="department" name="Course Number"><br><br>
 
-        <label for="lastName">Course Number</label>
-        <input type="text" id="lastName" name="last_name"><br><br>
-
-        <input type="submit" value="Submit">
-    </form>
-
-    <br><br>
     <iframe src="https://anex.us/grades/?dept=<%= department %>&number=<%= courseNum %>" height="600" width="800" title="description" id="myIframe" scrolling="no"></iframe>
+    <table id="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rating /5</th>
+            <th>Difficulty /5
+            <th>Would Take Again %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be inserted here -->
+        </tbody>
+    </table>
 
 
 
-    
 
+<script src="/socket.io/socket.io.js"></script>
 
     <script src="client.js"></script>
-    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -78,34 +78,50 @@ app.use(express.urlencoded({ extended: true }))
 app.post("/process_form", (req, res) => {
   department = req.body["department"];
   courseNum = req.body["courseNum"];
-  res.render("process-form", { department, courseNum });
-});
-
-for (const key in csceObj) {
-  if (csceObj.hasOwnProperty(key)) {
-    var profData = csceObj[key];
-    var rating = profData[1];
-    // console.log(rating);
-    var courses = profData[0];
-    var difficulty = profData[2];
-    var wouldTake = profData[3];
-    for (const j in courses) {
-      var className = courses[j];
-      // console.log(className);
-      if (className == `${department}${courseNum}`) {
-        var profName = key;
-        
-        const newProperties = {
-          [key]: [rating, difficulty, wouldTake],
-        };
-
-        profObj = { ...profObj, ...newProperties };
-
+  for (const key in csceObj) {
+    if (csceObj.hasOwnProperty(key)) {
+      var profData = csceObj[key];
+      var rating = profData[1];
+      // console.log(rating);
+      var courses = profData[0];
+      var difficulty = profData[2];
+      var wouldTake = profData[3];
+      for (const j in courses) {
+        var className = courses[j];
+        // console.log(className);
+        if (className == `${department}${courseNum}`) {
+          var profName = key;
+          
+          const newProperties = {
+            [key]: [rating, difficulty, wouldTake],
+          };
+  
+          profObj = { ...profObj, ...newProperties };
+  
+        }
       }
     }
   }
-}
-console.log(profObj);
+  console.log(profObj);
+  
+  // Handle incoming socket connections
+  const socketIo = require('socket.io');
+  const io = socketIo(server);
+  io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    // Define a custom event to send an object to the client
+    socket.emit('objectData', profObj);
+
+    socket.on('disconnect', () => {
+      console.log('User disconnected');
+    });
+  });
+
+  res.render("process-form", { department, courseNum });
+});
+
+
 
 
 server.listen(port, () => {

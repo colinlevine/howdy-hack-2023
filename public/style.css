@@ -2,19 +2,23 @@ body {
     font-family: sans-serif;
 }
 
+table {
+  top: 400px;
+}
+
 #myIframe {
     width: 200px; /* Width of the cropped segment */
     height: 300px; /* Height of the cropped segment */
     position: relative;
     overflow: hidden;
   }
-          #myIframe{
-            content: "";
-      position: absolute;
-    top: 0;
+#myIframe{
+    content: "";
+    position: absolute;
+    top: 600px;
     left: 0;
     width: 100%; /* Adjust as needed */
     height: 75%; /* Adjust as needed */
     background: white; /* Fill the cropped area with the desired background color */
     clip: rect(100px,1500px, 700px, 50px); /* Define the cropping rectangle (top, right, bottom, left) */
-          }
+}
