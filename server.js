@@ -23,7 +23,7 @@ let csceObj = {"Riccardo Bettati": [["CSCE313", "CSCE410", "CSCE611"], 2.6, 4.8,
                 "Guofei Gu": [["CSCE465"], 1.9, 4.6, 12.5],
                 "Ricardo Gutierrez-Osuna": [["CPSC689", "CPSCSECT", "CSCE000", "CSCE481", "CSCE482", "CSCE491", "CSCE630", "CSCE681"], 1.6, 2.5, 40],
                 "Drew Hamilton": [["CSCE410", "CSCE611"], 2, 3.5, 100],
-                "Tracy Hammond": [["CSCE222", "CSCE482", "CSCE689"], 2.1, 3.6, 0],
+                "Tracy Hammond": [["CSCE222", "CSCE482", "CSCE689"], 2.1, 3.6, "n/a"],
                 "Maristela Holanda": [["CSCE121"], 3.1, 3.9, 100],
                 "Ruihong Huang": [["CSCE470", "CSCE638"], 2.3, 3, 40],
                 "Thomas Ioerger": [["CSCE121", "CSCE420"], 4.5, 2.8, 100],
@@ -42,10 +42,10 @@ let csceObj = {"Riccardo Bettati": [["CSCE313", "CSCE410", "CSCE611"], 2.6, 4.8,
                 "Robert Lightfoot": [["CSCE111", "CSCE121", "CSCE315", "CSCE412"], 4.1, 2.7, 95.6522],
                 "Jyh Liu": [["CSCE451", "CSCE462"], 1.5, 4, 37.5], "Dmitri Loguinov": [["CSCE313", "CSCE463"], 5, 4.5, 100],
                 "Shawn Lupoli": [["CMSC104", "CMSC151", "CMSC201", "CMSC331", "CMSC341", "CMSC433", "CSC201", "CSCE221"], 3.4, 3.4, 61.9048],
-                "Rabi Mahapatra": [["CPSC321", "CPSC489", "CSCE312", "CSCE350", "CSCE462", "CSCE482", "CSCE617"], 1.8, 3.9, 0],
+                "Rabi Mahapatra": [["CPSC321", "CPSC489", "CSCE312", "CSCE350", "CSCE462", "CSCE482", "CSCE617"], 1.8, 3.9, "n/a"],
                 "Michael Moore": [["CSCE121", "CSCE221", "CSCE436", "CSCE489", "CSCE689"], 2.6, 3.6, 57],
                 "Bobak Mortazavi": [["CSCE421"], 3.4, 4.3, 57.1429],
-                "Robin Murphy": [["CSCE483", "CSCE625"], 1.3, 3.7, 0],
+                "Robin Murphy": [["CSCE483", "CSCE625"], 1.3, 3.7, "n/a"],
                 "Abdullah Muzahid": [["CSCE312", "CSCE350"], 2.4, 4.1, 42.8571],
                 "Jason O' Kane": [["CSCE215", "CSCE350", "CSCE374", "CSCE574", "CSCE750", "CSCE774"], 4.4, 3.1, 81.8182],
                 "Michael Quinn": [["CSCE121", "CSCE689"], 3, 3.6, 60], 
@@ -61,7 +61,7 @@ let csceObj = {"Riccardo Bettati": [["CSCE313", "CSCE410", "CSCE611"], 2.6, 4.8,
                 "Shawna Thomas": [["CSCE315", "CSCE411"], 5, 3.3, 100],
                 "Aakash Tyagi": [["CSCE181", "CSCE221", "CSCE312", "CSCE313", "CSCE314"], 5, 4.6, 96.7213],
                 "Pauline Wade": [["CSCE431", "CSCE482", "ENGR181", "ENGR181H", "ENGR381"], 1.4, 3.2, 10.3448],
-                "Duncan Walker": [["ECEN680"], 4, 3, 0],
+                "Duncan Walker": [["ECEN680"], 4, 3, "n/a"],
                 "Ronald Ward": [["CSCE222"], 2.3, 4, "n/a"],
                 "Ki Hwan Yum": [["COS206", "CSCE110", "CSCE206", "CSCE312"], 2.8, 3.6, 60]};
 
@@ -69,6 +69,7 @@ let csceObj = {"Riccardo Bettati": [["CSCE313", "CSCE410", "CSCE611"], 2.6, 4.8,
 var profObj = {};
 var department;
 var courseNum;
+var generatedText;
 
 app.get("/", (req, res) => {
   res.render('index', { department, courseNum });
@@ -78,6 +79,33 @@ app.use(express.urlencoded({ extended: true }))
 app.post("/process_form", (req, res) => {
   department = req.body["department"];
   courseNum = req.body["courseNum"];
+  const OpenAI = require("openai");
+
+    async function main() {
+      const openai = new OpenAI({
+        apiKey: "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",
+      });
+    
+      const chatCompletion = await openai.chat.completions.create({
+        messages: [{ role: "user", content: `Give me a course desccription of ${department}${courseNum} at Texas A&M University. Make this a single concise paragraph.` }],
+        model: "gpt-3.5-turbo",
+      });
+
+      generatedText = chatCompletion.choices[0].message.content;
+  
+      console.log(generatedText);
+
+      io.emit('textGenerated', generatedText); // This will send data to all connected clients
+
+    
+      // Use chatCompletion as needed
+    }
+    
+    main().catch((error) => {
+      console.error(error);
+    });
+
+
   for (const key in csceObj) {
     if (csceObj.hasOwnProperty(key)) {
       var profData = csceObj[key];
@@ -101,6 +129,7 @@ app.post("/process_form", (req, res) => {
         }
       }
     }
+    
   }
   console.log(profObj);
   

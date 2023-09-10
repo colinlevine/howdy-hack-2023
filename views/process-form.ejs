@@ -35,18 +35,14 @@
 
 </head>
 <body>
-    <style>
-        .custom-bg {
-          background-color: #500; /* Your custom background color */
-          color: #ffffff; /* Text color for contrast */
-        }
-      </style>
-        <h1 class="custom-bg pt-3 pb-3">Aggie Courses Directory
-            <img src="TAM-Logo-white.png" width="75" height="55">
-        </h1>
-        <div id="dataContainer"></div>
+    <h1 class="custom-bg pt-3 pb-3">Aggie Course Directory
+        <img src="TAM-Logo-white.png" width="75" height="55">
+    </h1>
+
+    <h2>AI Generated Description:</h2>
+    <p id="gpt"></p>
     <iframe src="https://anex.us/grades/?dept=<%= department %>&number=<%= courseNum %>" height="600" width="800" title="description" id="myIframe" scrolling="no"></iframe>
-    <table id="data-table" style="margin-top: 650px;">
+    <table id="data-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -59,6 +55,9 @@
                 <!-- Data will be inserted here -->
             </tbody>
     </table>
+    <br>
+    <p class="text-center">Data from anex.us and ratemyprofessors.com</p>
+
 
 
 

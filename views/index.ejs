@@ -13,17 +13,33 @@
     </style>
 </head>
 <body>
-    <style>
-        .custom-bg {
-          background-color: #500; /* Your custom background color */
-          color: #ffffff; /* Text color for contrast */
-        }
-      </style>
-        <h1 class="custom-bg pt-3 pb-3">    Aggie Courses Directory
-            <img src="TAM-Logo-white.png" width="75" height="55">
-        </h1>
-        <div id="dataContainer"></div>
-    <form action="/process_form" method="post">
+    <h1 class="custom-bg pt-3 pb-3">Aggie Course Directory
+        <img src="TAM-Logo-white.png" width="75" height="55">
+    </h1>
+
+    <div class = "container text-center">
+        <p style="font-family: Verdana, Geneva, Tahoma, sans-serif;" class="fs-5">Learn about your Texas A&M University courses!</p>
+        <form action="/process_form" method="post">
+            <div class="container text-center">
+                <div class="row justify-content-around">
+                    <div class = "col-4">
+                        <label for="firstName">Department (Ex.CSCE):</label>
+                        <input type="text" style="width: 150px; height: 30px;" id="department" name="department">
+                    </div>
+                    <div class = "col-4">    
+                        <label for="lastName" ;>Course Number</label>
+                        <input type="text" style="width: 150px; height: 30px;" id="lastName" name="courseNum"> <b></b>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="button">Submit</button>
+            </div>
+        </form>
+    </div>    
+
+
+    <!-- <form action="/process_form" method="post">
         <label for="firstName">Department</label>
         <input type="text" id="department" name="department"><br><br>
 
@@ -31,7 +47,7 @@
         <input type="text" id="courseNum" name="courseNum"><br><br>
 
         <input type="submit" value="Submit">
-    </form>
+    </form> -->
     
 
 

@@ -5,8 +5,7 @@ const socket = io();
 socket.on('objectData', (data) => {
   console.log('Received object data:', data);
 
-  const tableBody = document.querySelector('#data-table tbody');
-  
+  const tableBody = document.querySelector('#data-table tbody');  
   // Loop through the object properties and populate the table
   for (const name in data) {
       if (data.hasOwnProperty(name)) {
@@ -21,8 +20,11 @@ socket.on('objectData', (data) => {
         cellValue2.textContent = data[name][1];
         cellValue3.textContent = data[name][2];
       }
-    }
-  // Use the data object as needed in your client-side code
-  // For example, update the UI with the data.
+    }  
+
 });
 
+socket.on('textGenerated', (generatedText) => {
+  console.log('Received generated text:', generatedText);
+  var gtext = document.querySelector("#gpt").innerHTML = `${generatedText}`;
+});
