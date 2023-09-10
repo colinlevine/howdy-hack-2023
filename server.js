@@ -82,7 +82,7 @@ app.post("/process_form", (req, res) => {
 
     async function main() {
       const openai = new OpenAI({
-        apiKey: "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",
+        apiKey: "Enter API key.",
       });
     
       const chatCompletion = await openai.chat.completions.create({
