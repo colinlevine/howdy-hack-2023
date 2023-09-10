@@ -5,8 +5,9 @@ const socket = io();
 socket.on('objectData', (data) => {
   console.log('Received object data:', data);
 
-  const tableBody = document.querySelector('#data-table tbody');  
+  var tableBody = document.querySelector('#data-table tbody');  
   // Loop through the object properties and populate the table
+  tableBody.innerHTML = "";
   for (const name in data) {
       if (data.hasOwnProperty(name)) {
         const row = tableBody.insertRow();
