@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aggie Course Directory</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
     <style>
         #data-table {
         border-collapse: collapse;
@@ -33,26 +35,35 @@
 
 </head>
 <body>
-
+    <style>
+        .custom-bg {
+          background-color: #500; /* Your custom background color */
+          color: #ffffff; /* Text color for contrast */
+        }
+      </style>
+        <h1 class="custom-bg pt-3 pb-3">Aggie Courses Directory
+            <img src="TAM-Logo-white.png" width="75" height="55">
+        </h1>
+        <div id="dataContainer"></div>
     <iframe src="https://anex.us/grades/?dept=<%= department %>&number=<%= courseNum %>" height="600" width="800" title="description" id="myIframe" scrolling="no"></iframe>
-    <table id="data-table">
+    <table id="data-table" style="margin-top: 650px;">
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Rating /5</th>
-            <th>Difficulty /5
-            <th>Would Take Again %</th>
-          </tr>
+            <tr>
+                <th>Name</th>
+                <th>Rating /5</th>
+                <th>Difficulty /5</th>
+                <th>Would Take Again %</th>
+            </tr>
         </thead>
-        <tbody>
-          <!-- Data will be inserted here -->
-        </tbody>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
     </table>
 
 
 
-
 <script src="/socket.io/socket.io.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
     <script src="client.js"></script>
 </body>

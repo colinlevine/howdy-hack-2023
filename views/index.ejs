@@ -19,39 +19,22 @@
           color: #ffffff; /* Text color for contrast */
         }
       </style>
-        <h1 class="custom-bg pt-3 pb-3">Aggie Courses Directory
+        <h1 class="custom-bg pt-3 pb-3">    Aggie Courses Directory
             <img src="TAM-Logo-white.png" width="75" height="55">
         </h1>
         <div id="dataContainer"></div>
+    <form action="/process_form" method="post">
+        <label for="firstName">Department</label>
+        <input type="text" id="department" name="department"><br><br>
 
-        <form id="myForm">
-            <label for="firstName">Department:</label>
-            <input type="text" id="department" name="department"><br><br>
-        
-            <label for="lastName">Course Number:</label>
-            <input type="text" id="lastName" name="courseNum"><br><br>
-        
-            <input type="submit" value="Submit">
-        </form>
+        <label for="lastName">Course Number</label>
+        <input type="text" id="courseNum" name="courseNum"><br><br>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <input type="submit" value="Submit">
+    </form>
+    
 
-        <script>
-        $(document).ready(function () {
-          $("#myForm").submit(function (event) {
-            event.preventDefault(); // Prevent the default form submission
-        
-            // Get form data
-            var formData = $(this).serialize();
-        
-            // Send AJAX request to the server
-            $.post("/process_form", formData, function (data) {
-              // Display the result in the dataContainer
-              $("#dataContainer").html(data);
-            });
-          });
-        });
-        </script>
+
     <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
